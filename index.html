@@ -44,9 +44,44 @@
     </div> -->
 
     <script type="text/html" id="user_tmpl">
-      <!-- <% _.each(Bundles.reverse(), function(bundle) { %>
+      <% _.each(Bundles.reverse(), function(bundle) { %>
 
-      <h2 class="grid_12"><a href="<%- bundle.URL %>"><%- bundle.Name %></a></h2>
+      <% for (var i = 0; i < id.length; i++){ %>
+        <div class = "row portfolio <%- id[i].conference %> <%- id[i].year %>">
+
+          <div class="col-md-3">
+            <img class="paperimage" src="<%- id[i].image %>" />
+          </div> 
+
+          <div class="col-md-9">
+            <span class="papertitle">
+              <%- id[i].title %> (<%- id[i].conference %> <%- id[i].year %>)
+            </span>
+            </br>
+            <span class="paperauthors">
+              <%- id[i].authors %>
+            </span>
+            </br>
+            <span class="paperdetails">
+              <%- id[i].abstract %>
+            </span>
+            </br>
+            </br>
+            <a href="<%- id[i].doi %>" class="btn btn-doi" alt="doi"
+            target="_blank">DOI</a> &nbsp; &nbsp;
+            <a href="<%- id[i].pdf %>" class="btn btn-pdf" alt="pdf"
+            target="_blank">PDF</a> &nbsp; &nbsp;
+            <a href="<%- id[i].video %>" class="btn btn-vdo" alt="video"
+            target="_blank">Video</a> &nbsp; &nbsp;
+            <a href="<%- id[i].website %>"
+            class="btn btn-pages" alt="page" target="_blank">Page</a>
+          </div>
+
+        </div>
+      <% } %>
+
+
+      <!-- <h2 class="grid_12"><a href="<%- bundle.URL %>"><%- bundle.Name %></a></h2> 
       <div class="grid_4 info">
         <p class="dates">
           <%- formatDate(bundle['Date from']) %> -
@@ -95,43 +130,9 @@
         </ul>
         <% } %>
       </div>
-      <div class="clearfix"></div>
-      <% }); %> -->
+      <div class="clearfix"></div> -->
+      <% }); %>
 
-
-      <% for (var i = 0; i < id.length; i++){ %>
-        <div class = "row portfolio <%- id[i].conference %> <%- id[i].year %>">
-
-          <div class="col-md-3">
-            <img class="paperimage" src="<%- id[i].image %>" />
-          </div> 
-
-          <div class="col-md-9">
-            <span class="papertitle">
-              <%- id[i].title %> (<%- id[i].conference %> <%- id[i].year %>)
-            </span>
-            </br>
-            <span class="paperauthors">
-              <%- id[i].authors %>
-            </span>
-            </br>
-            <span class="paperdetails">
-              <%- id[i].abstract %>
-            </span>
-            </br>
-            </br>
-            <a href="<%- id[i].doi %>" class="btn btn-doi" alt="doi"
-            target="_blank">DOI</a> &nbsp; &nbsp;
-            <a href="<%- id[i].pdf %>" class="btn btn-pdf" alt="pdf"
-            target="_blank">PDF</a> &nbsp; &nbsp;
-            <a href="<%- id[i].video %>" class="btn btn-vdo" alt="video"
-            target="_blank">Video</a> &nbsp; &nbsp;
-            <a href="<%- id[i].website %>"
-            class="btn btn-pages" alt="page" target="_blank">Page</a>
-          </div>
-
-        </div>
-      <% } %>
 
 
     </script>
@@ -168,13 +169,11 @@
     // });
 
     var url = "https://docs.google.com/spreadsheets/d/1yaZWr2U66JCPy5NssvbX-qGEgytAyVl8ftS4V2UGxPs/edit?usp=sharing";
-    gooss.data(
-    {
-        id: {
-            url: url,
-            index: 0
-        }
-    },
+    gooss.data({id: 
+                {
+                  url: url,
+                  index: 0
+                }},
 
     function (err, data) {
         if (err) { return alert(err); }
