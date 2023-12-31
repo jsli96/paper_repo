@@ -1,190 +1,51 @@
+<!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="">
-	<meta name="author" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Gooss quickstart</title>
 
-	<!-- Get Google Fonts -->
-	<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-	<link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
-	<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
-	<link href='https://fonts.googleapis.com/css?family=Raleway:300' rel='stylesheet' type='text/css'>
-	<link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400' rel='stylesheet' type='text/css'>
+  <!-- TODO: Add your spreadsheet RSS feed URL and uncomment the following lines -->
+  <!-- <link rel="alternate" type="application/rss+xml" title="TITLE" href="" /> -->
 
-	<title>Sustainable Making Publication Repository</title>
-
-	<!-- Bootstrap Core CSS -->
-	<link href="css/bootstrap.min.css" rel="stylesheet">
-
-	<!-- Custom CSS -->
-	<link rel="shortcut icon" href="icon/csail.ico" type="image/x-icon" />
-	<link href="css/reset.css" rel="stylesheet" />
-	<link href="css/index.css" rel="stylesheet">
-
+  <link rel="stylesheet" href="css/text.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-  <script type="text/javascript" src="underscore-min.js"></script>
-  <script type="text/javascript" src="gooss.js"></script>
+  <script type="text/javascript" src="js/underscore-min.js"></script>
+  <script type="text/javascript" src="js/gooss.js"></script>
+  <script type="text/javascript">
+    // TODO: Change this to the URL of your spreadsheet.
+    var url = "https://docs.google.com/spreadsheet/ccc?key=0Ar35F5WUAjXedE9SMDRnT0dmUXdNQmJxeG5CRXpjSVE";
+
+    // DOMContentLoaded is not available IE < 9. Use a different load method
+    // if you wish to target lower IE versions.
+    document.addEventListener("DOMContentLoaded", function() {
+      // TODO: Change "sheet_name" to the name you want to use
+      gooss.data({ sheet_name: {url: url, index: 0} }, function(err, data) {
+        if (err) {
+          document.getElementById("loading").innerHTML = "Error: " + err;
+          return;
+        }
+        gooss.template(data);
+        document.getElementById("loading").style.display = "none";
+      });
+    }, false);
+  </script>
 </head>
 <body>
-<!-- 
-  <div class="container_12">
-    <h1 class="grid_12"><span class="a">Bundle</span> <span class="b">bundle</span> <span class="c">bundle!</span></h1>
+  <!-- TODO: Change this title (remember to change the <title> tag as well) -->
+  <h1>Gooss quickstart</h1>
 
-    <p class="push_4 grid_8 clearfix">
-      With so many indie game bundles, how can you keep track of them all?!<br/>
-      <a href="https://docs.google.com/spreadsheet/viewform?formkey=dC1tVlplZC0tc2M1cjR6cHNfeGptWmc6MQ">Submit new bundle</a> &bull;
-      <a href="https://docs.google.com/spreadsheet/ccc?key=0Ar35F5WUAjXedDY4R0VTS05UcWhaM081eklIclN0VFE">View data</a> &bull;
-      <a href="https://spreadsheets.google.com/feeds/list/0Ar35F5WUAjXedDY4R0VTS05UcWhaM081eklIclN0VFE/od6/public/basic?hl=en_US&alt=rss">RSS feed</a>
-    </p>
+  <div id="loading"><p>Loading...</p></div>
 
-    <div id="loading" class="push_5 grid_2 clearfix">
-      Loading...
-    </div> -->
-
-    <script type="text/html" id="user_tmpl">
-      <% _.each(Bundles.reverse(), function(bundle) { %>
-
-      <% for (var i = 0; i < id.length; i++){ %>
-        <div class = "row portfolio <%- id[i].conference %> <%- id[i].year %>">
-
-          <div class="col-md-3">
-            <img class="paperimage" src="<%- id[i].image %>" />
-          </div> 
-
-          <div class="col-md-9">
-            <span class="papertitle">
-              <%- id[i].title %> (<%- id[i].conference %> <%- id[i].year %>)
-            </span>
-            </br>
-            <span class="paperauthors">
-              <%- id[i].authors %>
-            </span>
-            </br>
-            <span class="paperdetails">
-              <%- id[i].abstract %>
-            </span>
-            </br>
-            </br>
-            <a href="<%- id[i].doi %>" class="btn btn-doi" alt="doi"
-            target="_blank">DOI</a> &nbsp; &nbsp;
-            <a href="<%- id[i].pdf %>" class="btn btn-pdf" alt="pdf"
-            target="_blank">PDF</a> &nbsp; &nbsp;
-            <a href="<%- id[i].video %>" class="btn btn-vdo" alt="video"
-            target="_blank">Video</a> &nbsp; &nbsp;
-            <a href="<%- id[i].website %>"
-            class="btn btn-pages" alt="page" target="_blank">Page</a>
-          </div>
-
-        </div>
-      <% } %>
-
-
-      <!-- <h2 class="grid_12"><a href="<%- bundle.URL %>"><%- bundle.Name %></a></h2> 
-      <div class="grid_4 info">
-        <p class="dates">
-          <%- formatDate(bundle['Date from']) %> -
-          <%- formatDate(bundle['Date to']) %>
-          <% if (bundle['Date from'] < (new Date()) && (new Date()) < bundle['Date to']) { %>
-          <span class="on-now">On now</span>
-          <% } %>
-        </p>
-        <p class="notes"><%- bundle.Notes %></p>
-
-        <div class="grid_2 alpha">
-          <h3>Operating systems</h3>
-          <ul class="oses">
-            <% _.each(bundle.OS.split("\n"), function(os) {%>
-            <li class="<%- os.toLowerCase() %>"><%- os %></li>
-            <% }); %>
-          </ul>
-        </div>
-        <div class="grid_2 omega">
-          <h3>Download methods</h3>
-          <ul class="grid_2 omega downloads">
-            <% _.each(bundle.Downloads.split("\n"), function(dl) {%>
-            <li class="<%- dl.toLowerCase() %>"><%- dl %></li>
-            <% }); %>
-          </ul>
-        </div>
-      </div>
-      <div class="grid_8 contents">
-        <ul>
-          <% _.each(bundle.Games.split("\n"), function(game) {%>
-          <li class="game <%- game.toLowerCase().replace(/[^a-z0-9]/g, '-') %>">
-            <% if (game in game_index) { %>
-              <a href="<%= game_index[game].URL %>"><%- game %></a>
-            <% } else { %>
-              <%- game %>
-            <% } %>
-          </li>
-          <% }); %>
-        </ul>
-        <% if (bundle.Bonus) { %>
-        <span class="bonus">Bonuses</span>
-        <ul>
-          <% _.each(bundle.Bonus.split("\n"), function(bonus) {%>
-          <li><%- bonus %></li>
-          <% }); %>
-        </ul>
-        <% } %>
-      </div>
-      <div class="clearfix"></div> -->
-      <% }); %>
-
-
-
-    </script>
-<!-- 
-    <div id="footer" class="grid_12 clearfix">
-    Made by <a href="http://stuartk.com/">Stuart Knightley</a> &bull;
-    Follow <a href="http://twitter.com/stuk">@stuk</a> &bull;
-    Powered by <a href="https://github.com/Stuk/gooss">gooss</a> &bull;
-    <a href="https://github.com/Stuk/bundle3">See the code on Github</a>
-    </div> -->
-
-  </div>
-
-  <script type="text/javascript">
-    // var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    // function formatDate(date) {
-    //   if (!date) return "Unknown";
-    //   return date.getDate() + " " + months[date.getMonth()] + " " + date.getFullYear();
-    // }
-
-    // var url = "https://docs.google.com/spreadsheet/ccc?key=0Ar35F5WUAjXedDY4R0VTS05UcWhaM081eklIclN0VFE";
-    // gooss.data({Bundles: {url: url}, Games: {url: url, index: 1}}, function(err, data) {
-    //   if (err) {
-    //     document.getElementById("loading").innerHTML = err;
-    //     return;
-    //   }
-    //   // Map the game names to their data
-    //   data.game_index = {};
-    //   _.each(data.Games, function(game, index) {
-    //     data.game_index[game.Name] = game;
-    //   });
-    //   gooss.template(data);
-    //   document.getElementById("loading").style.display = "none";
-    // });
-
-    var url = "https://docs.google.com/spreadsheets/d/1yaZWr2U66JCPy5NssvbX-qGEgytAyVl8ftS4V2UGxPs/edit?usp=sharing";
-    gooss.data({id: 
-                {
-                  url: url,
-                  index: 0
-                }},
-
-    function (err, data) {
-        if (err) { return alert(err); }
-        else {
-            console.log(data);
-            console.log(data.id.length);
-            gooss.template(data);
-            // document.getElementById("user_tmpl").style.display = "none";
-        }
-        // document.getElementById("Container").innerHTML = JSON.stringify(data, null, 2);
-    });
+  <!-- TODO: Replace the contents of this script tag with your template -->
+  <script type="text/html">
+    <p><%- sheet_name.length %> rows in the worksheet</p>
   </script>
+
+  <div id="footer">
+    <p>
+      Powered by <a href="https://github.com/Stuk/gooss">gooss</a>
+    </p>
+  </div>
 </body>
 </html>
